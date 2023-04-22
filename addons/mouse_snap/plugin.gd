@@ -22,7 +22,10 @@ func _move_selected_node_to_mouse_position() -> void:
         if node is Node3D:
             var mouse_pos = Ref3D._viewport.get_mouse_position()
             var world_pos = _get_world_position_from_mouse_position(Ref3D._camera, mouse_pos)
-            node.global_transform.origin = world_pos
+            if world_pos == Vector3.ZERO:
+                printerr("Mouse snap could not find a body to snap the object to.")
+            else:
+                node.global_transform.origin = world_pos
         else:
             printerr("Selected node is not a Node3D, skipping. (", node.name, ")")
 
